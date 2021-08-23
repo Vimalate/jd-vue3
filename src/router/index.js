@@ -1,16 +1,29 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/home/Home'
-import Register from '../views/register/Register'
-import Login from '../views/login/Login'
 
 const routes = [{
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import(/* webpackChunkName: "home" */ '../views/home/Home')
+  },{
+    path: '/cartList',
+    name: 'CartList',
+    component: () => import(/* webpackChunkName: "cartList" */ '../views/cartList/CartList')
+  },{
+    path: '/orderConfirmation/:id',
+    name: 'OrderConfirmation',
+    component: () => import(/* webpackChunkName: "orderConfirmation" */ '../views/orderConfirmation/OrderConfirmation')
+  }, {
+    path: '/orderList',
+    name: 'OrderList',
+    component: () => import(/* webpackChunkName: "orderList" */ '../views/orderList/OrderList')
+  },{
+    path: '/shop/:id',
+    name: 'Shop',
+    component: () => import(/* webpackChunkName: "shop" */ '../views/shop/Shop')
   }, {
     path: '/register',
     name: 'Register',
-    component: Register,
+    component: () => import(/* webpackChunkName: "register" */ '../views/register/Register'),
     beforeEnter(to, from, next) {
       const { isLogin } = localStorage;
       isLogin ? next({ name: 'Home'}):  next();
@@ -18,7 +31,7 @@ const routes = [{
   }, {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: () => import(/* webpackChunkName: "login" */ '../views/login/Login'),
     beforeEnter(to, from, next) {
       const { isLogin } = localStorage;
       isLogin ? next({ name: 'Home'}):  next();
@@ -30,7 +43,7 @@ const routes = [{
   //   // route level code-splitting
   //   // this generates a separate chunk (about.[hash].js) for this route
   //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  //   
   // }
 ]
 
